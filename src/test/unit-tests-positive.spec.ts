@@ -8,87 +8,92 @@ describe("RegistrationForm - Positive cases", () => {
     form = new RegistrationForm();
   });
 
-  it("valid username", () => {
-    form.Username("user_123");
-    assert.strictEqual(form.username, "user_123");
+  it("should save valid username", () => {
+    form.setUsername("katetest123");
+    assert.strictEqual(form.username, "katetest123");
   });
 
-  it("username trimmed", () => {
-    form.Username("  userName  ");
+  it("should remove spaces from username", () => {
+    form.setUsername("  userName  ");
     assert.strictEqual(form.username, "userName");
   });
 
-  it("valid email", () => {
-    form.Email("test@example.com");
-    assert.strictEqual(form.email, "test@example.com");
+  it("should save username with max length - 20", () => {
+    form.setUsername("aaaaaaaaaaaaaaaaaaaa");
+    assert.strictEqual(form.username, "aaaaaaaaaaaaaaaaaaaa");
   });
 
-  it("email trimmed and lowercase", () => {
-    form.Email("  TEST@EXAMPLE.COM ");
-    assert.strictEqual(form.email, "test@example.com");
+  it("should save username with minimum length - 3", () => {
+    form.setUsername("aaa");
+    assert.strictEqual(form.username, "aaa");
   });
 
-  it("valid password with letters and digits", () => {
-    form.Password("Password1");
-    assert.strictEqual(form.password, "Password1");
+  it("should save valid email", () => {
+    form.setEmail("katetest@gmail.com");
+    assert.strictEqual(form.email, "katetest@gmail.com");
   });
 
-  it("confirm password matches password", () => {
-    form.Password("Password1");
-    form.ConfirmPassword("Password1");
-    assert.strictEqual(form.confirmPassword, "Password1");
+  it("email save email with subdomain", () => {
+    form.setEmail("user@mail.example.com");
+    assert.strictEqual(form.email, "user@mail.example.com");
   });
 
-  it("valid phone number, digits only", () => {
-    form.PhoneNumber("+375 (29) 123-45-67");
-    assert.strictEqual(form.phoneNumber, "375291234567");
+  it("should remove spaces from email", () => {
+    form.setEmail("  katetest@gmail.com ");
+    assert.strictEqual(form.email, "katetest@gmail.com");
   });
 
-  it("isValid returns true for complete valid form", () => {
-    form.Username("user123");
-    form.Email("test@mail.com");
-    form.Password("Passw0rd");
-    form.ConfirmPassword("Passw0rd");
-    form.PhoneNumber("1234567890");
+  it("should change email letters to lowercase", () => {
+    form.setEmail("KATETEST@gmail.com");
+    assert.strictEqual(form.email, "katetest@gmail.com");
+  });
+
+  it("should save valid password", () => {
+    form.setPassword("testKH123");
+    assert.strictEqual(form.password, "testKH123");
+  });
+
+  it("should save password with minimum characters - 8", () => {
+    form.setPassword("abc12345");
+    assert.strictEqual(form.password, "abc12345");
+  });
+
+  it("should save confirm password matches password", () => {
+    form.setPassword("testKH123");
+    form.setConfirmPassword("testKH123");
+    assert.strictEqual(form.confirmPassword, "testKH123");
+  });
+
+  it("should remove not numbers characters", () => {
+    form.setPhoneNumber("+375 (25) 0000000");
+    assert.strictEqual(form.phoneNumber, "375250000000");
+  });
+
+  it("should save phone number with max length 15 digits", () => {
+    form.setPhoneNumber("120255567676789");
+    assert.strictEqual(form.phoneNumber, "120255567676789");
+  });
+
+  it("should return true for valid data in form", () => {
+    form.setUsername("user123");
+    form.setEmail("test@mail.com");
+    form.setPassword("Passw0rd");
+    form.setConfirmPassword("Passw0rd");
+    form.setPhoneNumber("1234567890");
     assert.strictEqual(form.isValid(), true);
   });
 
-  it("getFormData returns correct data object", () => {
-    form.Username("user123");
-    form.Email("test@mail.com");
-    form.Password("Passw0rd");
-    form.ConfirmPassword("Passw0rd");
-    form.PhoneNumber("1234567890");
+  it("should return filled valid data", () => {
+    form.setUsername("user123");
+    form.setEmail("test@mail.com");
+    form.setPassword("Passw0rd");
+    form.setConfirmPassword("Passw0rd");
+    form.setPhoneNumber("1234567890");
     assert.deepStrictEqual(form.getFormData(), {
       username: "user123",
       email: "test@mail.com",
       password: "Passw0rd",
       phone: "1234567890",
     });
-  });
-
-  it("username with max length 20", () => {
-    form.Username("a".repeat(20));
-    assert.strictEqual(form.username, "a".repeat(20));
-  });
-
-  it("phone number with max length 15 digits", () => {
-    form.PhoneNumber("123456789012345");
-    assert.strictEqual(form.phoneNumber, "123456789012345");
-  });
-
-  it("password exactly 8 characters", () => {
-    form.Password("abc12345");
-    assert.strictEqual(form.password, "abc12345");
-  });
-
-  it("username with underscores", () => {
-    form.Username("user_name_1");
-    assert.strictEqual(form.username, "user_name_1");
-  });
-
-  it("email with subdomain", () => {
-    form.Email("user@mail.example.com");
-    assert.strictEqual(form.email, "user@mail.example.com");
   });
 });

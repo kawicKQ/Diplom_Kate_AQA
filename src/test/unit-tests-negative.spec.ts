@@ -10,81 +10,93 @@ describe("RegistrationForm - Negative cases", () => {
 
   it("should throw error if username <3 characters", () => {
     assert.throws(
-      () => form.Username("ab"),
-      /Username length should be 3-20 characters, only letters and numbers allowed/i,
+      () => form.setUsername("ab"),
+      /Username length should be 3–20 characters, only letters and numbers allowed/i,
     );
   });
-  it("should throw error if username is empty", () => {
-    assert.throws(
-      () => form.Username(" "),
-      /Username length should be 3-20 characters, only letters and numbers allowed/i,
-    );
-  });
+
   it("should throw error if username >20 characters", () => {
     assert.throws(
-      () => form.Username("testkatelongpassword123"),
-      /Username length should be 3-20 characters, only letters and numbers allowed/i,
+      () => form.setUsername("testkatelongpassword123"),
+      /Username length should be 3–20 characters, only letters and numbers allowed/i,
+    );
+  });
+
+  it("should throw error if username is empty", () => {
+    assert.throws(
+      () => form.setUsername(" "),
+      /Username length should be 3–20 characters, only letters and numbers allowed/i,
     );
   });
 
   it("should throw error if username has special characters", () => {
     assert.throws(
-      () => form.Username("user!@#"),
-      /Username length should be 3-20 characters, only letters and numbers allowed/i,
+      () => form.setUsername("user!@#"),
+      /Username length should be 3–20 characters, only letters and numbers allowed/i,
     );
   });
 
-  it("should throw error if username email missing @", () => {
-    assert.throws(() => form.Email("testexample.com"), /Incorrect email/i);
+  it("username with spaces only", () => {
+    assert.throws(
+      () => form.setUsername("   "),
+      /Username length should be 3–20 characters, only letters and numbers allowed/i,
+    );
+  });
+
+  it("should throw error if email missing @", () => {
+    assert.throws(() => form.setEmail("katetest.com"), /Incorrect email/i);
   });
 
   it("should throw error if email is empty", () => {
-    assert.throws(() => form.Email(""), /Incorrect email/i);
+    assert.throws(() => form.setEmail(""), /Incorrect email/i);
   });
 
-  it("password too short", () => {
-    assert.throws(() => form.Password("abc12"), /минимум 8 символов/i);
+  it("should throw error if password <8 characters", () => {
+    assert.throws(() => form.setPassword("abc12"), /Password should have at least 8 characters/i);
   });
 
-  it("password with special characters", () => {
-    assert.throws(() => form.Password("abc123$%"), /Only letters and numbers allowed/i);
+  it("should throw error if password has special characters", () => {
+    assert.throws(() => form.setPassword("abcdf123$%"), /Only letters and numbers allowed/i);
   });
 
-  it("confirm password not matching", () => {
-    form.Password("Password1");
-    assert.throws(() => form.ConfirmPassword("Password2"), /Passwords aren't matching/i);
+  it("password with spaces", () => {
+    assert.throws(() => form.setPassword("     "), /Password should have at least 8 characters/i);
   });
 
-  it("phone number too short", () => {
-    assert.throws(() => form.PhoneNumber("12345"), /Phone Number should be 10-15 characters/i);
+  it("should throw error if confirm password not matching", () => {
+    form.setPassword("testkate1");
+    assert.throws(() => form.setConfirmPassword("testkate2"), /Passwords aren't matching/i);
   });
 
-  it("phone number too long", () => {
-    assert.throws(() => form.PhoneNumber("1234567890123456"), /Phone Number should be 10-15 characters/i);
+  it("should throw error if phone number <10 chracters", () => {
+    assert.throws(() => form.setPhoneNumber("37525"), /Phone Number should be 10–15 characters/i);
   });
 
-  it("phone number with no digits", () => {
-    assert.throws(() => form.PhoneNumber("abcdef"), /Phone Number should be 10-15 characters/i);
+  it("should throw error if phone number >15 chracters", () => {
+    assert.throws(() => form.setPhoneNumber("12025550909555555"), /Phone Number should be 10–15 characters/i);
   });
 
-  it("getFormData throws if form is invalid", () => {
-    form.Username("user123");
-    form.Email("test@mail.com");
-    form.Password("Passw0rd");
-    form.ConfirmPassword("Passw0rd");
-    // phone missing
-    assert.throws(() => form.getFormData(), /invalid data/i);
+  it("should throw error if phone number is empty", () => {
+    assert.throws(() => form.setPhoneNumber(""), /Phone Number should be 10–15 characters/i);
+  });
+
+  it("Getting filled form throws error if data is invalid - no phone number", () => {
+    form.setUsername("user123");
+    form.setEmail("test@mail.com");
+    form.setPassword("testtesttest");
+    form.setConfirmPassword("testtesttest");
+    assert.throws(() => form.getFormData(), /Form filled with invalid data/i);
+  });
+
+  it("Getting filled form throws error if data is invalid - no email", () => {
+    form.setUsername("user123");
+    form.setPassword("testtesttest");
+    form.setPhoneNumber("11111111111");
+    form.setConfirmPassword("testtesttest");
+    assert.throws(() => form.getFormData(), /Form filled with invalid data/i);
   });
 
   it("isValid returns false if any field is empty", () => {
     assert.strictEqual(form.isValid(), false);
-  });
-
-  it("username with spaces only", () => {
-    assert.throws(() => form.Username("   "), /Username length should be 3-20 characters/i);
-  });
-
-  it("password with spaces", () => {
-    assert.throws(() => form.Password("     "), /Only letters and numbers allowed/i);
   });
 });
