@@ -14,8 +14,8 @@ describe("RegistrationForm - Positive cases", () => {
   });
 
   it("should remove spaces from username", () => {
-    form.setUsername("  userName  ");
-    assert.strictEqual(form.username, "userName");
+    form.setUsername("  katetest123  ");
+    assert.strictEqual(form.username, "katetest123");
   });
 
   it("should save username with max length - 20", () => {
@@ -64,7 +64,12 @@ describe("RegistrationForm - Positive cases", () => {
     assert.strictEqual(form.confirmPassword, "testKH123");
   });
 
-  it("should remove not numbers characters", () => {
+  it("should save valid phone number", () => {
+    form.setPhoneNumber("12025556767");
+    assert.strictEqual(form.phoneNumber, "12025556767");
+  });
+
+  it("should remove not digits characters", () => {
     form.setPhoneNumber("+375 (25) 0000000");
     assert.strictEqual(form.phoneNumber, "375250000000");
   });
@@ -72,6 +77,11 @@ describe("RegistrationForm - Positive cases", () => {
   it("should save phone number with max length 15 digits", () => {
     form.setPhoneNumber("120255567676789");
     assert.strictEqual(form.phoneNumber, "120255567676789");
+  });
+
+  it("should save phone number with min length 10 digits", () => {
+    form.setPhoneNumber("1202555676");
+    assert.strictEqual(form.phoneNumber, "1202555676");
   });
 
   it("should return true for valid data in form", () => {
