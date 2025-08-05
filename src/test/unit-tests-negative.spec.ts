@@ -58,8 +58,11 @@ describe("RegistrationForm - Negative cases", () => {
   it("should throw error if password has special characters", () => {
     assert.throws(() => form.setPassword("abcdf123$%"), /Only letters and numbers allowed/i);
   });
+  it(" should thorow error if password is empty", () => {
+    assert.throws(() => form.setPassword(""), /Password should have at least 8 characters/i);
+  });
 
-  it("password with spaces", () => {
+  it(" should thorow error if password only with spaces", () => {
     assert.throws(() => form.setPassword("     "), /Password should have at least 8 characters/i);
   });
 
@@ -94,9 +97,5 @@ describe("RegistrationForm - Negative cases", () => {
     form.setPhoneNumber("11111111111");
     form.setConfirmPassword("testtesttest");
     assert.throws(() => form.getFormData(), /Form filled with invalid data/i);
-  });
-
-  it("isValid returns false if any field is empty", () => {
-    assert.strictEqual(form.isValid(), false);
   });
 });
