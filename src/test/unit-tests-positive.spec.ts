@@ -90,7 +90,7 @@ describe("RegistrationForm - Positive cases", () => {
     form.setPassword("Passw0rd");
     form.setConfirmPassword("Passw0rd");
     form.setPhoneNumber("1234567890");
-    assert.strictEqual(form.isValid(), true);
+    assert.strictEqual(form.isValidData(), true);
   });
 
   it("should return filled valid data", () => {

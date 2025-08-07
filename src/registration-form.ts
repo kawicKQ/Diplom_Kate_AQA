@@ -50,7 +50,7 @@ export default class RegistrationForm {
     this.phoneNumber = cleaned;
   }
 
-  isValid(): boolean {
+  isValidData(): boolean {
     return (
       this.username !== "" &&
       this.email !== "" &&
@@ -61,7 +61,7 @@ export default class RegistrationForm {
   }
 
   getFormData(): object {
-    if (!this.isValid()) {
+    if (!this.isValidData()) {
       throw new Error("Form filled with invalid data");
     }
 
