@@ -22,21 +22,21 @@ describe("PUT /posts/id", () => {
     const response = await api.put(endpoints.posts.updatePost(post.id)).send(bodyUpdatedPost);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.body).toBe(bodyUpdatedPost.title);
+    expect(response.body.body).toBe(bodyUpdatedPost.body);
   });
 
-  test("PUT /id - should update userId", async () => {
+  test("PUT /id - should update only userId", async () => {
     const response = await api.put(endpoints.posts.updatePost(post.id)).send(userUpdatedPost);
 
     expect(response.statusCode).toBe(200);
     expect(response.body.userId).toBe(userUpdatedPost.userId);
   });
 
-  test("PUT /id - should update title", async () => {
+  test("PUT /id - should update only title", async () => {
     const response = await api.put(endpoints.posts.updatePost(post.id)).send(titleUpdatedPost);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.title).toBe(titleUpdatedPost.userId);
+    expect(response.body.title).toBe(titleUpdatedPost.title);
   });
 
   test("PUT /posts/:id - should allow updating post with empty title and body", async () => {

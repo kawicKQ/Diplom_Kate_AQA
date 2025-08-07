@@ -14,9 +14,9 @@
   "author": "",
   "main": "index.js",
   "scripts": {
-    "test:mocha": "mocha -r ts-node/register src/test/**/*.spec.ts",
-    "test:jest": "jest",
-    "test:playwright": "npx playwright test"
+    "unit": "mocha -r ts-node/register src/test/**/*.spec.ts",
+    "api": "jest",
+    "ui": "npx playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",

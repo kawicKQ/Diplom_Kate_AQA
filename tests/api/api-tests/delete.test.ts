@@ -17,21 +17,21 @@ describe("DELETE /posts/id", () => {
     expect(response.body).toEqual({});
   });
 
-  test("DELETE /id - should return empty object for non-existing post ID", async () => {
+  test("DELETE /id - should return empty object for deleting non-existing post ID", async () => {
     const response = await api.delete(endpoints.posts.deletePost(notExistingPost)).ok((res) => true);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({});
   });
 
-  test("DELETE /id - should return empty object for invalid post id", async () => {
+  test("DELETE /id - should return empty object for deleting invalid post id", async () => {
     const response = await api.delete(endpoints.posts.deletePost(stringIdPost)).ok((res) => true);
 
     expect([200, 404]).toContain(response.statusCode);
     expect(response.body).toEqual({});
   });
 
-  test("DELETE /posts/:id - should return 404 for space as ID", async () => {
+  test("DELETE /posts/:id - should return 404 for deleting space as id", async () => {
     const response = await api.delete(endpoints.posts.deletePost(spacesAsPostId)).ok((res) => true);
     expect(response.statusCode).toBe(404);
     expect(response.body).toEqual({});

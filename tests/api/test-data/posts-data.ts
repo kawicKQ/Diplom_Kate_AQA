@@ -87,7 +87,7 @@ export const userUpdatedPost = {
 export const titleUpdatedPost = {
   userId: post.userId,
   id: post.id,
-  title: "updated title",
+  title: "updated title kh",
   body: post.body,
 };
 
