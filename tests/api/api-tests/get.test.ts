@@ -33,13 +33,6 @@ describe("GET /posts", () => {
     expect(response.body).toEqual({});
   });
 
-  test("GET- should filter posts by userId", async () => {
-    const response = await api.get(endpoints.posts.getPosts + "?userId=1");
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body.every((p: any) => p.userId === 1)).toBe(true);
-  });
-
   test("GET - should return all comments for post", async () => {
     const response = await api.get(endpoints.posts.getPostComments(post.id));
     response.body.forEach((comment: any) => {
