@@ -16,7 +16,10 @@
   "scripts": {
     "unit": "mocha -r ts-node/register src/test/**/*.spec.ts",
     "api": "jest",
-    "ui": "npx playwright test"
+    "ui": "npx playwright test",
+    "html": "npx playwright show-report --port=9333",
+    "allure:reporter": "npx allure generate ./allure-results --clean",
+    "allure:open": "npx allure open ./allure-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.2",

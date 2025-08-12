@@ -34,7 +34,7 @@ describe("POST /posts", () => {
     expect(response.body.body).toContain(emojiBody);
   });
 
-  test("POST - should create post special characters in fields", async () => {
+  test("POST - should create post with special characters in fields", async () => {
     const response = await api.post(endpoints.posts.createPost).send(specialChPost);
 
     expect(response.statusCode).toBe(201);
